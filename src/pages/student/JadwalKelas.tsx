@@ -1,6 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import Footer from "../../components/Footer";
-import Navbar from "../../components/NavbarLanding";
 import axios from "axios";
 import appSettings from "../../Appsettings";
 import { AppContext } from "../../AppContext";
@@ -26,6 +24,7 @@ function JadwalKelas() {
                 if (err.response.status === 401) {
                     localStorage.setItem('token', '');
                     setToken('');
+                    toast.info('Token expired, please login again', { theme: "colored" });
                 } else {
                     toast.error(err, { theme: "colored" })
                 }
@@ -33,8 +32,7 @@ function JadwalKelas() {
     }, [])
 
     return (
-        <div className="flex flex-col items-center justify-start relative text-lg">
-            <Navbar className="bg-themeTeal mb-24" />
+        <div className="min-h-[100svh] flex flex-col items-center justify-start">
             <ToastContainer />
             <p className="font-bold text-xl md:text-3xl mb-16">Jadwal <span className="text-themeTeal">Kelas</span></p>
             <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24">
@@ -70,8 +68,8 @@ function JadwalKelas() {
                     </tbody>
                 </table>
             </div>
-            <Footer />
         </div>
+
     );
 }
 
