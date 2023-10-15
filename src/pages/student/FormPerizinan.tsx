@@ -50,7 +50,7 @@ function formPerizinan() {
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.info('Token expired, please login again', { theme: "colored" });
+                    toast.info('Token expired, please login again', { theme: "colored", toastId: 'expired' });
                     localStorage.setItem('token', '');
                     setToken('');
                 } else {
@@ -161,7 +161,6 @@ function formPerizinan() {
                 <p className="font-bold text-xl md:text-3xl mb-16 mt-16">Riwayat <span className="text-themeTeal">Perizinan</span></p>
                 {leavePermits.map((el: any, id) => <PermitCard key={id} {...el} fetchData={fetchData} />)}
             </div>
-            <ToastContainer />
         </div>
     );
 }

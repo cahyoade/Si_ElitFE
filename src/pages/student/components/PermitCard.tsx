@@ -37,7 +37,7 @@ function PermitCard({ class_id, class_name, class_type, start_date, end_date, is
                     fetchData();
                 }).catch(err => {
                     if (err.response.status === 401) {
-                        toast.info('Token expired, please login again', { theme: "colored" });
+                        toast.info('Token expired, please login again', { theme: "colored", toastId: 'expired' });
                         localStorage.setItem('token', '');
                         setToken('');
                     } else {
@@ -56,7 +56,7 @@ function PermitCard({ class_id, class_name, class_type, start_date, end_date, is
             <BiSolidTrash className='absolute text-2xl right-8 cursor-pointer' onClick={deletePermit} />
             <p className="font-bold text-lg mb-2">{class_name}</p>
             <p className="font-light text-sm mb-2">{class_type} ({(new Date(start_date)).toLocaleString('id').substring(0, 16)} - {(new Date(end_date)).toLocaleString('id').split(' ')[1].substring(0, 5)})</p>
-            <p className={`font-light text-sm mb-6 ${is_approved ? 'text-themeTeal' : 'text-themeRed'}`}>{is_approved ? 'Disetujui' : 'Belum disetujui'}</p>
+            <p className={`font-semibold text-sm mb-6 ${is_approved ? 'text-themeTeal' : 'text-themeRed'}`}>{is_approved ? 'Disetujui' : 'Belum disetujui'}</p>
             <p className="mb-4">{description}</p>
             <img src={`${appSettings.api}${img_url}`} alt="" className="max-h-96 w-fit mx-auto" />
         </div>

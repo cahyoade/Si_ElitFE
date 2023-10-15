@@ -1,9 +1,8 @@
-import Logo from '../assets/logo.png';
-import { Link, useLocation } from 'react-router-dom';
+import Logo from '../../../assets/logo.png';
+
 import { useContext, useState } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
 import { BiLogOut } from 'react-icons/bi';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../../../AppContext';
 import Swal from 'sweetalert2'
 
 type NavbarProps = {

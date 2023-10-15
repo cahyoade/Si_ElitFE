@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import Footer from "../../components/Footer";
-import Navbar from "../../components/NavbarLanding";
+import Navbar from "./compoenents/NavbarLanding";
 import axios from "axios";
 import appSettings from "../../Appsettings";
 import { AppContext } from "../../AppContext";
@@ -35,7 +35,6 @@ function JadwalKelas() {
     return (
         <div className="flex flex-col items-center justify-start relative text-lg">
             <Navbar className="bg-themeTeal mb-24" />
-            <ToastContainer />
             <p className="font-bold text-xl md:text-3xl mb-16">Jadwal <span className="text-themeTeal">Kelas</span></p>
             <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24">
                 <table className="w-full text-left h-12">

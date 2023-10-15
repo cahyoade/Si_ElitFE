@@ -1,4 +1,4 @@
-import Logo from '../assets/logo.png';
+import Logo from '../../../assets/logo.png';
 import {Link, useLocation} from 'react-router-dom';
 import {useState} from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';

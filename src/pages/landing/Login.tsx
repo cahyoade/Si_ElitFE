@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import Footer from "../../components/Footer";
-import Navbar from "../../components/NavbarLanding";
+import Navbar from "./compoenents/NavbarLanding";
 import TextInput from "../../components/TextInput";
 import PasswordInput from "../../components/PasswordInput";
 import { ToastContainer, toast } from 'react-toastify';
@@ -55,7 +55,6 @@ function Login() {
 
     return (
         <div className="flex flex-col items-center justify-start relative text-lg">
-            <ToastContainer />
             <Navbar className="bg-themeTeal mb-24" />
             <div className="bg-white mb-24">
                 <div className="border-b-2 py-12 px-24 flex flex-col items-center">

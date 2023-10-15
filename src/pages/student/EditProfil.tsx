@@ -123,7 +123,6 @@ function EditProfil() {
                 <PasswordInput name='passwordNewConfirm' value={userDataForm.passwordNewConfirm} title='Konfirmasi password baru (opsional)' errorMsg={userDataForm.passwordNewConfirmErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                 <button type='submit' className='bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.01] transition-all duration-200'>Submit</button>
             </form>
-            <ToastContainer />
         </div>
     );
 }

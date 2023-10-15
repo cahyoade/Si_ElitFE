@@ -1,5 +1,5 @@
 import Footer from "../../components/Footer";
-import Navbar from "../../components/NavbarLanding";
+import Navbar from "./compoenents/NavbarLanding";
 import {useState} from 'react';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 

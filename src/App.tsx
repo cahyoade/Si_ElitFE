@@ -1,25 +1,38 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { AppContext } from './AppContext'
+
+//pages
 import Landing from './pages/landing/Index'
 import Student from './pages/student/Index'
 import Teacher from './pages/teacher/Index'
 import Admin from './pages/admin/Index'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
+//landing
 import Faq from './pages/landing/FAQ'
 import Beranda from './pages/landing/Beranda'
 import JadwalKelas from './pages/landing/JadwalKelas'
 import About from './pages/landing/About'
 import Login from './pages/landing/Login'
 
+//student
 import StudentBeranda from './pages/student/Beranda'
 import StudentJadwalKelas from './pages/student/JadwalKelas'
 import StudentRiwayatPresensi from './pages/student/RiwayatPresensi'
 import StudentFormPerizinan from './pages/student/FormPerizinan'
 import StudentEditProfil from './pages/student/EditProfil'
 
+//admin
+import DataSantri from './pages/admin/DataSantri'
+import DataRiwayatPresensi from './pages/admin/DataRIwayatPresensi'
+import BypassPresensi from './pages/admin/BypassPresensi'
+import Perangkat from './pages/admin/Perangkat'
+import DataPerizinan from './pages/admin/DataPerizinan'
+
+//components
 import Loading from './components/Loading'
-import { AppContext } from './AppContext'
 import RouteChanger from './components/RouteChanger'
+import { ToastContainer } from 'react-toastify'
 
 
 function App() {
@@ -31,6 +44,7 @@ function App() {
 			token: { data: token, set: setToken },
 			loading: { data: isLoading, set: setIsLoading }
 		}}>
+			<ToastContainer	/>
 			{isLoading === true ? <Loading /> : <></>}
 			<Router>
 				<RouteChanger token={token} />
@@ -52,7 +66,17 @@ function App() {
 						<Route path='editProfil' element={<StudentEditProfil />}></Route>
 					</Route>
 					<Route path='/guru' element={< Teacher />}></Route>
-					<Route path='/admin' element={< Admin />}></Route>
+					<Route path='/admin' element={< Admin />}>
+						<Route index element={<DataSantri />}></Route>
+						<Route path='dataSantri' element={<DataSantri />}></Route>
+						<Route path='dataAkun' element={<DataSantri />}></Route>
+						<Route path='dataRiwayatPresensi' element={<DataRiwayatPresensi />}></Route>
+						<Route path='jadwalKelas' element={<Perangkat />}></Route>
+						<Route path='bypassPresensi' element={<BypassPresensi />}></Route>
+						<Route path='rekapPresensi' element={<Perangkat />}></Route>
+						<Route path='perangkat' element={<Perangkat />}></Route>
+						<Route path='dataPerizinan' element={<DataPerizinan />}></Route>
+					</Route>
 				</Routes>
 			</Router>
 		</AppContext.Provider>

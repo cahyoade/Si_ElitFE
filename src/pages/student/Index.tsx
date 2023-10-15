@@ -1,6 +1,6 @@
 import { useState, useContext, createContext } from "react";
 import Footer from "../../components/Footer"
-import Navbar from "../../components/NavbarStudent"
+import Navbar from "./components/NavbarStudent"
 import { Outlet } from 'react-router-dom'
 import { AppContext } from "../../AppContext";
 import jwt from 'jwt-decode';

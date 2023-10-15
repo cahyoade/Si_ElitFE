@@ -24,7 +24,7 @@ function JadwalKelas() {
                 if (err.response.status === 401) {
                     localStorage.setItem('token', '');
                     setToken('');
-                    toast.info('Token expired, please login again', { theme: "colored" });
+                    toast.info('Token expired, please login again', { theme: "colored", toastId: 'expired' });
                 } else {
                     toast.error(err, { theme: "colored" })
                 }
@@ -33,7 +33,7 @@ function JadwalKelas() {
 
     return (
         <div className="min-h-[100svh] flex flex-col items-center justify-start">
-            <ToastContainer />
+
             <p className="font-bold text-xl md:text-3xl mb-16">Jadwal <span className="text-themeTeal">Kelas</span></p>
             <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24">
                 <table className="w-full text-left h-12">

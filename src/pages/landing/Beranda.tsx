@@ -1,5 +1,5 @@
 import Footer from "../../components/Footer";
-import Navbar from "../../components/NavbarLanding";
+import Navbar from "./compoenents/NavbarLanding";
 import Hero from '../../assets/hero.png';
 import icon_calendar from '../../assets/icon_calendar.svg';
 import icon_faq from '../../assets/icon_faq.svg';

@@ -8,7 +8,7 @@ import PresensiCard from './components/PresensiCard';
 
 
 function RiwayatPresensi() {
-    const [attendaneHistory, setAttendanceHistory] = useState([]);
+    const [attendanceHistory, setAttendanceHistory] = useState([]);
     const userData = useContext(userContext);
     const setToken = useContext(AppContext).token.set;
     const token = useContext(AppContext).token.data;
@@ -29,7 +29,7 @@ function RiwayatPresensi() {
             })
             .catch(err => {
                 if (err.response.status === 401) {
-                    toast.info('Token expired, please login again', { theme: "colored" });
+                    toast.info('Token expired, please login again', { theme: "colored", toastId: 'expired' });
                     localStorage.setItem('token', '');
                     setToken('');
                 } else {
@@ -40,14 +40,13 @@ function RiwayatPresensi() {
 
     return (
         <div className='w-full flex flex-col items-center min-h-[100svh]'>
-            <ToastContainer />
             <p className="font-bold text-xl md:text-3xl mb-16">Riwayat <span className="text-themeTeal">Presensi</span></p>
             <div className="flex flex-col items-center gap-6 w-full max-w-6xl px-8">
                 <div className='hidden last:block text-xl mb-24'>
                     Anda belum memiliki riwayat presnesi
                 </div>
                 {
-                    attendaneHistory.map((attendance: any) => attendance.attend_at ? < PresensiCard {...attendance}/> : <></>)
+                    attendanceHistory.map((attendance: any) => attendance.attend_at ? < PresensiCard {...attendance}/> : <></>)
                 }
             </div>
         </div>
