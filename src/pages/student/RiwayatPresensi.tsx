@@ -40,7 +40,7 @@ function RiwayatPresensi() {
 
     return (
         <div className='w-full flex flex-col items-center min-h-[100svh]'>
-            <p className="font-bold text-xl md:text-3xl mb-16">Riwayat <span className="text-themeTeal">Presensi</span></p>
+            <p className="font-bold mb-16">Riwayat <span className="text-themeTeal">Presensi</span></p>
             <div className="flex flex-col items-center gap-6 w-full max-w-6xl px-8">
                 <div className='hidden last:block text-xl mb-24'>
                     Anda belum memiliki riwayat presnesi

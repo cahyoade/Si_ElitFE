@@ -24,7 +24,9 @@ import StudentEditProfil from './pages/student/EditProfil'
 
 //admin
 import DataSantri from './pages/admin/DataSantri'
-import DataRiwayatPresensi from './pages/admin/DataRIwayatPresensi'
+import DataAkun from './pages/admin/DataAkun'
+import DataRiwayatPresensi from './pages/admin/DataRiwayatPresensi'
+import AdminJadwalKelas from './pages/admin/JadwalKelas'
 import BypassPresensi from './pages/admin/BypassPresensi'
 import Perangkat from './pages/admin/Perangkat'
 import DataPerizinan from './pages/admin/DataPerizinan'
@@ -69,9 +71,9 @@ function App() {
 					<Route path='/admin' element={< Admin />}>
 						<Route index element={<DataSantri />}></Route>
 						<Route path='dataSantri' element={<DataSantri />}></Route>
-						<Route path='dataAkun' element={<DataSantri />}></Route>
+						<Route path='dataAkun' element={<DataAkun />}></Route>
 						<Route path='dataRiwayatPresensi' element={<DataRiwayatPresensi />}></Route>
-						<Route path='jadwalKelas' element={<Perangkat />}></Route>
+						<Route path='jadwalKelas' element={<AdminJadwalKelas />}></Route>
 						<Route path='bypassPresensi' element={<BypassPresensi />}></Route>
 						<Route path='rekapPresensi' element={<Perangkat />}></Route>
 						<Route path='perangkat' element={<Perangkat />}></Route>

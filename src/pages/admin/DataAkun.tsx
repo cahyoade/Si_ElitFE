@@ -10,14 +10,14 @@ import DateInput from "../../components/DateInput";
 import {FiEdit} from 'react-icons/fi';
 import { BiSolidTrash } from "react-icons/bi";
 
-function DataSantri() {
+function DataAkun() {
     const setToken = useContext(AppContext).token.set;
     const token = useContext(AppContext).token.data;
 
     const [search, setSearch] = useState('');
-    const [students, setStudents] = useState([]);
+    const [accounts, setAccounts] = useState([]);
     const [mode, setMode] = useState<'view' | 'form'>('view');
-    const [student, setStudent] = useState<any>({
+    const [account, setaccount] = useState<any>({
         id: '',
         name: '',
         card_id: '',
@@ -26,7 +26,7 @@ function DataSantri() {
         birth_date: '',
         grade: '',
         telephone_number: '',
-        role: 1,
+        role:'',
         class_type: '',
         gender: '',
         nis: '',
@@ -36,9 +36,9 @@ function DataSantri() {
         residence_in_semarang: ''
     });
 
-    console.log(student);
+    console.log(account)
 
-    const initialStudent = {
+    const initialaccount = {
         id: '',
         name: '',
         card_id: '',
@@ -47,7 +47,7 @@ function DataSantri() {
         birth_date: '',
         grade: '',
         telephone_number: '',
-        role: 1,
+        role: '',
         class_type: '',
         gender: '',
         nis: '',
@@ -67,13 +67,21 @@ function DataSantri() {
         label: 'Perempuan'
     }];
 
+    const roleOptions = [{
+        value: '2',
+        label: 'Guru'
+    }, {
+        value: '3',
+        label: 'Admin'
+    }];
+
     useEffect(() => {
-        getStudents();
+        getAccounts();
         getClassTypes();
     }, []);
 
     useEffect(() => {
-        getStudents();
+        getAccounts();
         window.scrollTo(0,0);
     }, [mode]);
 
@@ -81,10 +89,10 @@ function DataSantri() {
         setSearch(e.target.value);
     }
 
-    function checkSearch(student: any) {
-        let searchString = student.name + student.nis + student.class_name + student.grade;
+    function checkSearch(account: any) {
+        let searchString = account.name + account.nis + account.class_name + account.grade;
 
-        if (student.gender) {
+        if (account.gender) {
             searchString += 'Laki-laki';
         } else {
             searchString += 'Perempuan';
@@ -99,24 +107,17 @@ function DataSantri() {
         }
     }
 
-    function validateStudent() {
+    function validateaccount() {
         let res = true;
-        Object.keys(student).map((key) => {
-            if (student[key] === '' && !key.endsWith('Err') && !key.endsWith('New') && key !== 'id' && key !== 'inactive_reason') {
+        Object.keys(account).map((key) => {
+            if (account[key] === '' && !key.endsWith('Err') && !key.endsWith('New') && ['name', 'role', 'password', 'birth_date', 'telephone_number', 'gender'].includes(key)) {
+                console.log(key);
                 res = false;
-                setStudent(prev => {
+                setaccount(prev => {
                     return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
                 })
             }
         })
-
-        const re = new RegExp(/\b[0-9A-F]{8}\b/gi);
-        if(!re.exec(student.card_id)){
-            res = false;
-            setStudent(prev => {
-                return { ...prev, card_idErr: 'harus berupa 8 digit hexadecimal' }
-            })
-        }
 
         if(!res){
             toast.warn('Mohon isi semua field yang ada', { theme: 'colored' });
@@ -125,7 +126,7 @@ function DataSantri() {
         return res;
     }
 
-    function getStudents() {
+    function getAccounts() {
         
         axios.get(`${appSettings.api}/users`, {
             headers: {
@@ -133,8 +134,8 @@ function DataSantri() {
             }
         })
             .then(res => {
-                const students = res.data.filter((el: any) => el.role === 1);
-                setStudents(students);
+                const accounts = res.data.filter((el: any) => el.role !== 1);
+                setAccounts(accounts);
             })
             .catch(err => {
                 if (err.response.status === 401) {
@@ -174,7 +175,7 @@ function DataSantri() {
             })
     }
 
-    function deleteStudent(id: string) {
+    function deleteaccount(id: string) {
         Swal.fire({
             title: 'Apakan anda yakin ingin menghapus user?',
             showCancelButton: true,
@@ -188,7 +189,7 @@ function DataSantri() {
                     }
                 }).then(res => {
                     toast.success('Berhasil menghapus data santri', { theme: "colored" });
-                    getStudents();
+                    getAccounts();
                 }).catch(err => {
                     if (err.response.status === 401) {
                         localStorage.setItem('token', '');
@@ -207,18 +208,18 @@ function DataSantri() {
 
     function handleSubmit(e: any) {
         e.preventDefault();
-        if(!validateStudent()){
+        if(!validateaccount()){
             return
         }
 
-        axios.post(`${appSettings.api}/users`, student, {
+        axios.post(`${appSettings.api}/users`, account, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then(res => {
             if (res.data.msg === 'User created.') {
                 toast.success(res.data.msg, { theme: 'colored' });
-                setStudent(initialStudent);
+                setaccount(initialaccount);
             }else{
                 toast.warn(res.data.msg, { theme: 'colored' });
             }
@@ -239,18 +240,18 @@ function DataSantri() {
 
     function handleEdit(e: any) {
         e.preventDefault();
-        if(!validateStudent()){
+        if(!validateaccount()){
             return
         }
 
-        axios.put(`${appSettings.api}/users`, student, {
+        axios.put(`${appSettings.api}/users`, account, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then(res => {
             if (res.data.msg === 'user updated') {
                 toast.success(res.data.msg, { theme: 'colored' });
-                setStudent(initialStudent);
+                setaccount(initialaccount);
                 setMode('view');
             }else{
                 toast.warn(res.data.msg, { theme: 'colored' });
@@ -266,43 +267,34 @@ function DataSantri() {
     }
 
     function handleChange(e: any) {
-        setStudent(prev => {
+        setaccount(prev => {
             return { ...prev, [e.target.name]: e.target.type == 'file' ? e.target.files[0] : e.target.value, [e.target.name + 'Err']: '' }
         })
     }
 
     return (
         <div className="min-h-[100svh] flex flex-col items-center justify-start py-16 grow px-20">
-            <p className="font-bold text-xl md:text-3xl mb-16">{mode === 'form' ? student.id ? 'Edit' : 'Tambah' : ''} Data <span className="text-themeTeal">Santri</span></p>
+            <p className="font-bold text-xl md:text-3xl mb-16">{mode === 'form' ? account.id ? 'Edit' : 'Tambah' : ''} Data <span className="text-themeTeal">Akun</span></p>
             {
                 mode === 'form' ?
                 <form className="w-full max-w-6xl bg-[#f6f6f6]/50 p-8 shadow-md flex flex-col rounded-xl mb-16" onSubmit={(e) => {
-                    if(student.id){
+                    if(account.id){
                         handleEdit(e);
                     }
                     else{
                         handleSubmit(e);
                     }
                 } }>
-                        <TextInput name='name' value={student.name} title='Nama' errorMsg={student.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <TextInput name='card_id' value={student.card_id} title='Card Id' errorMsg={student.card_idErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <TextInput name={student.id ? 'passwordNew' : 'password'} value={student.id ? student.passwordNew : student.password} title={student.id ? 'Password baru (opsional)' : 'password'} errorMsg={student.id ? student.passwordNewErr : student.passwordErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <DateInput name='birth_date' value={student.birth_date} title='Tanggal lahir' errorMsg={student.birth_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <TextInput name='grade' value={student.grade} title='Angkatan' errorMsg={student.gradeErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <TextInput name='telephone_number' value={student.telephone_number} title='Nomor telepon' errorMsg={student.telephone_numberErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <SelectInput title='Tipe Kelas' name='class_type' value={student.class_type} onChange={handleChange} errorMsg={student.class_typeErr} values={classTypes} />
-                        <SelectInput title='Gender' name='gender' value={student.gender} onChange={handleChange} errorMsg={student.genderErr} values={genderOptions} />
-                        <TextInput name='nis' value={student.nis} title='NIS (Nomor Induk Santri)' errorMsg={student.nisErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <TextInput name='origin' value={student.origin} title='Tempat asal' errorMsg={student.originErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <TextInput name='residence_in_semarang' value={student.residence_in_semarang} title='Tempat tinggal di Semarang' errorMsg={student.residence_in_semarangErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <SelectInput title='Santri Aktif?' name='is_active' value={student.is_active} onChange={handleChange} errorMsg={student.is_activeErr} values={[{ value: '1', label:'Ya'},{ value: '0', label: 'Tidak'}]} />
-                        {
-                            student.is_active == '0' &&
-                            <TextInput name='inactive_reason' value={student.inactive_reason} title='Alasan tidak aktif' errorMsg={student.inactive_reasonErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        }
+                        <TextInput name='name' value={account.name} title='Nama' errorMsg={account.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <SelectInput title='Role' name='role' value={account.role} onChange={handleChange} errorMsg={account.roleErr} values={roleOptions} />
+                        <TextInput name={account.id ? 'passwordNew' : 'password'} value={account.id ? account.passwordNew : account.password} title={account.id ? 'Password baru (opsional)' : 'password'} errorMsg={account.id ? account.passwordNewErr : account.passwordErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <DateInput name='birth_date' value={account.birth_date} title='Tanggal lahir' errorMsg={account.birth_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <TextInput name='telephone_number' value={account.telephone_number} title='Nomor telepon' errorMsg={account.telephone_numberErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <SelectInput title='Gender' name='gender' value={account.gender} onChange={handleChange} errorMsg={account.genderErr} values={genderOptions} />
+                        <TextInput name='residence_in_semarang' value={account.residence_in_semarang} title='Tempat tinggal di Semarang' errorMsg={account.residence_in_semarangErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <div className="self-end justify-between flex">
                         <button type="button" className="bg-[#d9d9d9] px-12 py-2 rounded mr-8 hover:scale-[1.03] font-semibold text-sm" onClick={() => {
-                            setStudent(initialStudent);
+                            setaccount(initialaccount);
                             setMode('view');
                         }}>Batal</button>
                         <button type='submit' className='bg-themeTeal text-white font-semibold text-sm px-12 py-2 rounded hover:scale-[1.03] transition-all duration-200'>Submit</button>
@@ -318,35 +310,33 @@ function DataSantri() {
                             <table className="w-full h-12 text-center text-sm">
                                 <thead className="bg-themeTeal text-white sticky top-0">
                                     <tr>
-                                        <th className="pl-6 py-2">NIS <br /> (Nomor Induk Santri)</th>
                                         <th className="pl-6 py-2">Nama</th>
-                                        <th className="pl-6 py-2">Kelas</th>
-                                        <th className="pl-6 py-2">Angkatan</th>
-                                        <th className="px-6 py-2">Jenis Kelamin</th>
+                                        <th className="pl-6 py-2">Role</th>
+                                        <th className="pl-6 py-2">Nomor Telepon</th>
+                                        <th className="pl-6 py-2">Jenis Kelamin</th>
                                         <th className="px-6 py-2">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        students.map((student: any, index) => {
+                                        accounts.map((account: any, index) => {
                                             return (
-                                                checkSearch(student) &&
+                                                checkSearch(account) &&
                                                 <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                                                    <td className="pl-6 py-2">{student.nis}</td>
-                                                    <td className="pl-6 py-2">{student.name}</td>
-                                                    <td className="pl-6 py-2">{student.class_name}</td>
-                                                    <td className="pl-6 py-2">{student.grade}</td>
-                                                    <td className="pl-6 py-2">{student.gender ? 'Laki-laki' : 'Perempuan'}</td>
+                                                    <td className="pl-6 py-2">{account.name}</td>
+                                                    <td className="pl-6 py-2">{account.role == 2 ? 'Guru' : 'Admin' }</td>
+                                                    <td className="pl-6 py-2">{account.telephone_number}</td>
+                                                    <td className="pl-6 py-2">{account.gender ? 'Laki-laki' : 'Perempuan'}</td>
                                                     <td className="px-6 py-2">
                                                         <button className="bg-themeOrange text-white px-2 py-1 rounded mr-2" onClick={
                                                             () => {
-                                                                setStudent({...initialStudent, ...student, birth_date: toSqlDate(student.birth_date)})
+                                                                setaccount({...initialaccount, ...account, birth_date: toSqlDate(account.birth_date)})
                                                                 setMode('form');
                                                             }
                                                         }>
                                                            <FiEdit/>
                                                         </button>
-                                                        <button className="bg-themeRed text-white px-2 py-1 rounded" onClick={() => { deleteStudent(student.id) }}>
+                                                        <button className="bg-themeRed text-white px-2 py-1 rounded" onClick={() => { deleteaccount(account.id) }}>
                                                             <BiSolidTrash/>
                                                         </button>
                                                     </td>
@@ -359,10 +349,8 @@ function DataSantri() {
                         </div>
                     </>
             }
-
-
         </div>
     );
 }
 
-export default DataSantri;
+export default DataAkun;

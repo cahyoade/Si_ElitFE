@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { BiLogOut } from 'react-icons/bi';
 import { AppContext } from '../../../AppContext';
 import Swal from 'sweetalert2'
+import { userContext } from '../Index';
 
 type NavbarProps = {
     className?: string
@@ -12,6 +13,9 @@ type NavbarProps = {
 
 function Navbar({ className }: NavbarProps) {
     const setToken = useContext(AppContext).token.set;
+    const userName = useContext(userContext).name;
+
+    console.log(userName);
 
 
     function logout() {
@@ -41,6 +45,7 @@ function Navbar({ className }: NavbarProps) {
                 </div>
             </div>
             <div className='flex w-4/12 min-w-[100px] text-xl justify-end items-center'>
+                <p className='font-semibold mr-6'>Hi, {userName}</p>
                 <BiLogOut className='cursor-pointer' fontSize="28px" onClick={logout}/>
             </div>
         </nav>

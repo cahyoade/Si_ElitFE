@@ -9,7 +9,6 @@ type DateInputProps = {
 }
 
 function DateInput({title, name, value, onChange, errorMsg, className, inputClassName}: DateInputProps) {
-    console.log(value)
     return (
         <div className={`relative mb-6 ${className}`}>
             <p className={`absolute left-4  font-bold top-2 text-xs ${errorMsg ? 'text-red-400' : 'text-stone-400'} transition-all duration-200`}>{errorMsg ? title + ' ' + errorMsg : title}</p>
