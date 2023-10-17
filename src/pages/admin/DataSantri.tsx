@@ -318,6 +318,7 @@ function DataSantri() {
                             <table className="w-full h-12 text-center text-sm">
                                 <thead className="bg-themeTeal text-white sticky top-0">
                                     <tr>
+                                        <th className="pl-6 py-2">No.</th>
                                         <th className="pl-6 py-2">NIS <br /> (Nomor Induk Santri)</th>
                                         <th className="pl-6 py-2">Nama</th>
                                         <th className="pl-6 py-2">Kelas</th>
@@ -332,6 +333,7 @@ function DataSantri() {
                                             return (
                                                 checkSearch(student) &&
                                                 <tr className="even:bg-slate-200 odd:bg-white" key={index}>
+                                                    <td className="pl-6 py-2">{index + 1}</td>
                                                     <td className="pl-6 py-2">{student.nis}</td>
                                                     <td className="pl-6 py-2">{student.name}</td>
                                                     <td className="pl-6 py-2">{student.class_name}</td>

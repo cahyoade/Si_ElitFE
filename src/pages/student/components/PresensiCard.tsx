@@ -1,6 +1,8 @@
+import { useContext } from "react"
+import { userContext } from "../Index"
+
 type PresensiCardProps = {
     class_name: string
-    class_type: string
     start_date: string
     end_date: string
     attend_at: string
@@ -8,13 +10,15 @@ type PresensiCardProps = {
 }
 
 
-function PresensiCard({class_name, class_type, start_date, end_date, attend_at, lastEditBy}: PresensiCardProps) {
-    start_date = (new Date(start_date)).toLocaleString('id').substring(0, 16);
+function PresensiCard({class_name, start_date, end_date, attend_at, lastEditBy}: PresensiCardProps) {
+    const class_type = useContext(userContext).class_name;
+    console.log(class_type);
+    start_date = (new Date(start_date)).toLocaleString('id').substring(0, 16).replace(/\//g, '-');
     end_date = (new Date(end_date)).toLocaleString('id').split(' ')[1].substring(0, 5);
-    attend_at = (new Date(attend_at)).toLocaleString('id');
+    attend_at = (new Date(attend_at)).toLocaleString('id').replace(/\//g, '-').replace(',', '');
 
     return ( 
-        <div className="bg-white p-8 rounded-xl border w-full">
+        <div className="bg-white p-8 rounded-xl border w-full text-sm md:text-base">
             <p className="font-bold">{class_name}</p>
             <p className="font-light mb-2">{class_type} ({start_date} - {end_date})</p>
             <hr />

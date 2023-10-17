@@ -5,6 +5,8 @@ import { AppContext } from "../../AppContext";
 import { toast } from 'react-toastify'
 import DateInput from "../../components/DateInput";
 import TextInput from "../../components/TextInput";
+import { BiSolidTrash } from "react-icons/bi";
+import { FiEdit } from "react-icons/fi";
 
 function JadwalKelas() {
     const [classes, setClasses] = useState([]);
@@ -60,7 +62,7 @@ function JadwalKelas() {
     }
 
     return (
-        <div className="min-h-[100svh] flex flex-col items-center px-20 py-16 grow">
+        <div className="min-h-[100svh] flex flex-col items-center px-12 py-16 grow">
             <p className="font-bold text-xl md:text-3xl mb-16">Jadwal <span className="text-themeTeal">Kelas</span></p>
             <div className="w-full flex justify-between mb-4">
                 <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search.string} />
@@ -77,24 +79,33 @@ function JadwalKelas() {
                             <th className="pl-6 py-2">Hari</th>
                             <th className="pl-6 py-2">Kelas</th>
                             <th className="pl-6 py-2">Ruangan</th>
-                            <th className="px-6 py-2">Waktu</th>
+                            <th className="pl-6 py-2">Waktu</th>
+                            <th className="px-6 py-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            classes.map((upcomingClass: any, index) => {
-                                const startDate = new Date(upcomingClass.start_date);
-                                const endDate = new Date(upcomingClass.end_date);
+                            classes.map((cl: any, index) => {
+                                const startDate = new Date(cl.start_date);
+                                const endDate = new Date(cl.end_date);
 
                                 return (
-
+                                    checkSearch(cl) &&
                                     <tr className="even:bg-slate-200 odd:bg-white" key={index}>
                                         <td className="pl-6 py-2">{index + 1}.</td>
-                                        <td className="pl-6 py-2">{upcomingClass.name}</td>
-                                        <td className="pl-6 py-2">{namaHari[startDate.getDay()]}, {startDate.toLocaleDateString('id')}</td>
+                                        <td className="pl-6 py-2">{cl.name}</td>
+                                        <td className="pl-6 py-2">{namaHari[startDate.getDay()]}, {startDate.toLocaleString('id').replace(/\//g, '-').replace(',', '').split(' ')[0]}</td>
                                         <td className="pl-6 py-2">{startDate.getHours() > 13 ? startDate.getHours() > 18 ? 'Malam' : 'Sore' : 'Pagi'}</td>
-                                        <td className="pl-6 py-2">{upcomingClass.location}</td>
-                                        <td className="px-6 py-2">{startDate.toLocaleTimeString('id')} s/d {endDate.toLocaleTimeString('id')}</td>
+                                        <td className="pl-6 py-2">{cl.location}</td>
+                                        <td className="pl-6 py-2">{startDate.toLocaleTimeString('id')} s/d {endDate.toLocaleTimeString('id')}</td>
+                                        <td className="px-6 py-2">
+                                            <button className="bg-themeOrange text-white px-2 py-1 rounded mr-2" >
+                                                <FiEdit />
+                                            </button>
+                                            <button className="bg-themeRed text-white px-2 py-1 rounded">
+                                                <BiSolidTrash />
+                                            </button>
+                                        </td>
                                     </tr>
                                 )
                             })

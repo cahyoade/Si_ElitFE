@@ -57,7 +57,7 @@ function JadwalKelas() {
                                     <tr className="even:bg-slate-200 odd:bg-white" key={index}>
                                         <td className="pl-6 py-2">{index + 1}.</td>
                                         <td className="pl-6 py-2">{upcomingClass.name}</td>
-                                        <td className="pl-6 py-2">{namaHari[startDate.getDay()]}, {startDate.toLocaleDateString('id')}</td>
+                                        <td className="pl-6 py-2">{namaHari[startDate.getDay()]}, {startDate.toLocaleString('id').replace(/\//g, '-').replace(',', '').split(' ')[0]}</td>
                                         <td className="pl-6 py-2">{startDate.getHours() > 13 ? startDate.getHours() > 18 ? 'Malam' : 'Sore' : 'Pagi'}</td>
                                         <td className="pl-6 py-2">{upcomingClass.location}</td>
                                         <td className="px-6 py-2">{startDate.toLocaleTimeString('id')} s/d {endDate.toLocaleTimeString('id')}</td>

@@ -5,6 +5,9 @@ function About() {
     return (
         <div className="flex flex-col items-center justify-start relative text-lg">
             <Navbar className="bg-themeTeal mb-24" />
+            <div className="px-4 text-center">
+
+            
             <p className="font-bold text-xl md:text-3xl mb-16">About <span className="text-themeTeal">Us</span></p>
             <p className="text-xl font-bold text-center mb-6 px-8">SI ELIT (SISTEM SMART ELECTRONIC IDENTIFICATION) PPM BKI</p>
             <p className="text-lg text-center max-w-5xl px-8 mb-16">
@@ -24,6 +27,7 @@ function About() {
             <p className="text-lg text-center max-w-5xl px-8 mb-24">
                 Proyek ini dikerjakan selama 1 siklus Capstone yang terselesaikan berkisar kurang lebih 1 tahun penuh. Setelah terselesaikannya proyek ini, diharapkan dapat mempermudah presensi dengan mengefisiensikan waktu presensi pada Pondok Pesantren Bina Khoirul Insan Semarang.
             </p>
+            </div>
             <Footer />
         </div>
     );
