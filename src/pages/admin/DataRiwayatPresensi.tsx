@@ -15,7 +15,6 @@ function DataRiwayatPresensi() {
     const setToken = useContext(AppContext).token.set;
     const namaHari = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
 
-    console.log(attendances);
 
     useEffect(() => {
         getAttendances();

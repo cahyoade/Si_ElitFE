@@ -15,7 +15,6 @@ function Navbar({ className }: NavbarProps) {
     const setToken = useContext(AppContext).token.set;
     const userName = useContext(userContext).name;
 
-
     function logout() {
         Swal.fire({
             title: 'Apakan anda yakin ingin logout?',

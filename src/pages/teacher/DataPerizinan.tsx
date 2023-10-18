@@ -14,7 +14,6 @@ function DataPerizinan() {
     const [search, setSearch] = useState({ string: '', startDate: '', endDate: '' });
     const token = useContext(AppContext).token.data;
     const setToken = useContext(AppContext).token.set;
-    const namaHari = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
 
     useEffect(() => {
         getPermits();

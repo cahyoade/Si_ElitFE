@@ -35,9 +35,6 @@ function DataAkun() {
         origin: '',
         residence_in_semarang: ''
     });
-
-    console.log(account)
-
     const initialaccount = {
         id: '',
         name: '',
@@ -111,7 +108,6 @@ function DataAkun() {
         let res = true;
         Object.keys(account).map((key) => {
             if (account[key] === '' && !key.endsWith('Err') && !key.endsWith('New') && ['name', 'role', 'password', 'birth_date', 'telephone_number', 'gender'].includes(key)) {
-                console.log(key);
                 res = false;
                 setaccount(prev => {
                     return { ...prev, [key + 'Err']: 'tidak boleh kosong' }

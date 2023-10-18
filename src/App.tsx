@@ -21,6 +21,11 @@ import StudentJadwalKelas from './pages/student/JadwalKelas'
 import StudentRiwayatPresensi from './pages/student/RiwayatPresensi'
 import StudentFormPerizinan from './pages/student/FormPerizinan'
 import StudentEditProfil from './pages/student/EditProfil'
+import StudentBypassPresensi from './pages/student/BypassPresensi'
+
+//guru
+import TeacherBypassPresensi from './pages/teacher/BypassPresensi'
+import TeacherDataPerizinan from './pages/teacher/DataPerizinan'
 
 //admin
 import DataSantri from './pages/admin/DataSantri'
@@ -65,9 +70,14 @@ function App() {
 						<Route path='riwayatPresensi' element={<StudentRiwayatPresensi />}></Route>
 						<Route path='jadwalKelas' element={<StudentJadwalKelas />}></Route>
 						<Route path='formPerizinan' element={<StudentFormPerizinan />}></Route>
+						<Route path='manageClass' element={<StudentBypassPresensi />}></Route>
 						<Route path='editProfil' element={<StudentEditProfil />}></Route>
 					</Route>
-					<Route path='/guru' element={< Teacher />}></Route>
+					<Route path='/guru' element={< Teacher />}>
+						<Route index element={<TeacherBypassPresensi />}></Route>
+						<Route path='bypassPresensi' element={<TeacherBypassPresensi />}></Route>
+						<Route path='dataPerizinan' element={<TeacherDataPerizinan />}></Route>
+					</Route>
 					<Route path='/admin' element={< Admin />}>
 						<Route index element={<DataSantri />}></Route>
 						<Route path='dataSantri' element={<DataSantri />}></Route>

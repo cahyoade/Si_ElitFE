@@ -12,7 +12,6 @@ type PresensiCardProps = {
 
 function PresensiCard({class_name, start_date, end_date, attend_at, lastEditBy}: PresensiCardProps) {
     const class_type = useContext(userContext).class_name;
-    console.log(class_type);
     start_date = (new Date(start_date)).toLocaleString('id').substring(0, 16).replace(/\//g, '-');
     end_date = (new Date(end_date)).toLocaleString('id').split(' ')[1].substring(0, 5);
     attend_at = (new Date(attend_at)).toLocaleString('id').replace(/\//g, '-').replace(',', '');

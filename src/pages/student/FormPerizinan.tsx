@@ -159,6 +159,9 @@ function formPerizinan() {
             </form>
             <div className="flex flex-col items-center w-full">
                 <p className="font-bold text-xl md:text-3xl mb-16 mt-16">Riwayat <span className="text-themeTeal">Perizinan</span></p>
+                <div className='hidden last:block text-xl mb-24'>
+                    Anda belum memiliki riwayat perizinan
+                </div>
                 {leavePermits.map((el: any, id) => <PermitCard key={id} {...el} fetchData={fetchData} />)}
             </div>
         </div>

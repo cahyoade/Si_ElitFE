@@ -36,8 +36,6 @@ function DataSantri() {
         residence_in_semarang: ''
     });
 
-    console.log(student);
-
     const initialStudent = {
         id: '',
         name: '',
