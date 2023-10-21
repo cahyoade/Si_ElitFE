@@ -133,8 +133,7 @@ function BypassPresensi() {
                             <th className="pl-6 py-2">NIS</th>
                             <th className="pl-6 py-2">Nama</th>
                             <th className="pl-6 py-2">Kelas</th>
-                            <th className="pl-6 py-2">Angkatan</th>
-                            <th className="pl-6 py-2">Jenis Kelamin</th>
+                            <th className="pl-6 py-2">Tanggal</th>
                             <th className="pl-6 py-2">Keterangan</th>
                             <th className="px-6 py-2">Aksi</th>
                         </tr>
@@ -142,6 +141,8 @@ function BypassPresensi() {
                     <tbody className="text-sm">
                         {
                             attendances.map((attendance: any, index) => {
+                                const startDate = new Date(attendance.start_date);
+
                                 return (
                                     checkSearch(attendance) &&
                                     <tr className="even:bg-slate-200 odd:bg-white" key={index}>
@@ -149,8 +150,7 @@ function BypassPresensi() {
                                         <td className="pl-6 py-2">{attendance.nis}</td>
                                         <td className="pl-6 py-2">{attendance.name.length > 24 ? attendance.name.substring(0, 24) + '...' : attendance.name}</td>
                                         <td className="pl-6 py-2">{attendance.class_name.length > 20 ? attendance.class_name.substring(0, 20) + '...' : attendance.class_name}</td>
-                                        <td className="pl-6 py-2">{attendance.grade}</td>
-                                        <td className="pl-6 py-2">{attendance.gender ? 'Laki-laki' : 'Perempuan'}</td>
+                                        <td className="pl-6 py-2">{startDate.toLocaleString('id')}</td>
                                         <td>{attendance.status ? attendance.status : 'Not set'}</td>
                                         <td className="px-6 py-2 flex flex-wrap gap-2 items-center">
                                             <button className="bg-themeTeal text-white px-2 py-1 rounded" onClick={() => {

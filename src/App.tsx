@@ -33,6 +33,7 @@ import DataAkun from './pages/admin/DataAkun'
 import DataRiwayatPresensi from './pages/admin/DataRiwayatPresensi'
 import AdminJadwalKelas from './pages/admin/JadwalKelas'
 import BypassPresensi from './pages/admin/BypassPresensi'
+import RekapPresensi from './pages/admin/RekapPresensi'
 import Perangkat from './pages/admin/Perangkat'
 import DataPerizinan from './pages/admin/DataPerizinan'
 
@@ -85,7 +86,7 @@ function App() {
 						<Route path='dataRiwayatPresensi' element={<DataRiwayatPresensi />}></Route>
 						<Route path='jadwalKelas' element={<AdminJadwalKelas />}></Route>
 						<Route path='bypassPresensi' element={<BypassPresensi />}></Route>
-						<Route path='rekapPresensi' element={<Perangkat />}></Route>
+						<Route path='rekapPresensi' element={<RekapPresensi />}></Route>
 						<Route path='perangkat' element={<Perangkat />}></Route>
 						<Route path='dataPerizinan' element={<DataPerizinan />}></Route>
 					</Route>

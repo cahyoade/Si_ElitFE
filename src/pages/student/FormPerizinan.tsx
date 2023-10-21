@@ -40,7 +40,7 @@ function formPerizinan() {
                 }
                 else {
                     const classes = res.data.map((el: any) => {
-                        const label = `${userData.class_name} - ${el.class_name} (${(new Date(el.start_date)).toLocaleString('id').substring(0, 16).replace(/\//g, '-')})`;
+                        const label = `${userData.class_name} - ${el.class_name} (${(new Date(el.start_date)).toLocaleString('id').substring(0, 17).replace(/\//g, '-')} s/d ${(new Date(el.end_date)).toLocaleString('id').substring(12, 17).replace(/\//g, '-')})`;
                         return { value: el.class_id, label: label, attend_at: el.attend_at }
                     });
                     const classFiltered = classes.filter(c => c.attend_at == null);
