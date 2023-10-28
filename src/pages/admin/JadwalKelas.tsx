@@ -19,24 +19,27 @@ function JadwalKelas() {
     const [search, setSearch] = useState({ string: '', startDate: '', endDate: '' });
     const setToken = useContext(AppContext).token.set;
     const token = useContext(AppContext).token.data;
+    const [multipleClass, setMultipleClass] = useState(false);
     const [kelas, setKelas] = useState<any>({
         id: '',
         name: '',
+        name_night: '',
         start_date: '',
         end_date: '',
         location: '',
         manager_id: '',
-        teacher_id: ''
+        teacher_id: '',
     });
 
     const initialKelas = {
         id: '',
         name: '',
+        name_night: '',
         start_date: '',
         end_date: '',
         location: '',
         manager_id: '',
-        teacher_id: ''
+        teacher_id: '',
     }
 
 
@@ -46,6 +49,14 @@ function JadwalKelas() {
         getUsers();
         getClasses();
     }, []);
+
+    useEffect(() => {
+        setKelas(initialKelas);
+    }, [multipleClass])
+
+    useEffect(() => {
+        setMultipleClass(false);
+    }, [mode])
 
     function getClasses() {
         axios.get(`${appSettings.api}/classes`, {
@@ -111,13 +122,13 @@ function JadwalKelas() {
     function handleSubmit(e: any) {
         e.preventDefault();
         if (validateClass() === false) return;
-        axios.post(`${appSettings.api}/classes`, kelas, {
+        axios.post(`${appSettings.api}/classes`, {...kelas, multiple_class: multipleClass}, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
             .then(res => {
-                if (res.data.msg === 'Class created.') {
+                if (res.data.msg === 'Class created.' || res.data.msg === 'Multiple classes created.') {
                     toast.success(res.data.msg, { theme: 'colored' });
                     setKelas(initialKelas);
                     getClasses();
@@ -204,6 +215,7 @@ function JadwalKelas() {
     }
 
     function handleSearch(e: any) {
+        console.log(e.target.value)
         setSearch(prev => ({ ...prev, [e.target.name]: e.target.value }));
     }
 
@@ -220,22 +232,33 @@ function JadwalKelas() {
     function validateClass() {
         let res = true;
         Object.keys(kelas).map((key) => {
-            if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id') {
-                res = false;
-                setKelas(prev => {
-                    return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
-                })
+            if(multipleClass){
+                if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id') {
+                    console.log(key)
+                    res = false;
+                    setKelas(prev => {
+                        return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
+                    })
+                }
+            }else{
+                if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id' && key !== 'name_night') {
+                    console.log(key)
+                    res = false;
+                    setKelas(prev => {
+                        return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
+                    })
+                }
             }
         })
 
-        if(kelas.start_date > kelas.end_date){
+        if (kelas.start_date > kelas.end_date) {
             res = false;
             setKelas(prev => {
                 return { ...prev, ['end_dateErr']: 'tidak boleh lebih awal dari waktu mulai' }
             })
         }
 
-        if(!res){
+        if (!res) {
             toast.warn('Mohon isi semua field yang ada', { theme: 'colored' });
         }
 
@@ -244,9 +267,13 @@ function JadwalKelas() {
 
 
     function handleChange(e: any) {
-        setKelas(prev => {
-            return { ...prev, [e.target.name]: e.target.type == 'file' ? e.target.files[0] : e.target.value, [e.target.name + 'Err']: '' }
-        })
+        if(e.target.type == 'checkbox'){
+            setMultipleClass(e.target.checked)
+        }else{
+            setKelas(prev => {
+                return { ...prev, [e.target.name]:  e.target.value, [e.target.name + 'Err']: '' }
+            })
+        }
     }
 
     function checkSearch(permit: any) {
@@ -274,9 +301,19 @@ function JadwalKelas() {
                             handleSubmit(e);
                         }
                     }}>
-                        <TextInput name='name' value={kelas.name} title='Nama' errorMsg={kelas.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <DateInput name='start_date' timeInput={true} value={kelas.start_date} title='Waktu Mulai' errorMsg={kelas.start_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <DateInput name='end_date' timeInput={true} value={kelas.end_date} title='Waktu Selesai' errorMsg={kelas.end_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        {!kelas.id &&
+                            <label htmlFor="multiple_class" className="flex flex-row-reverse gap-2 justify-end mb-4">Generate beberapa kelas sekaligus
+                                <input type="checkbox" name='multiple_class' onChange={handleChange} checked={multipleClass} />
+                            </label>
+                        }
+
+                        <TextInput name='name' value={kelas.name} title={`${multipleClass ? 'Nama kelas pagi' : 'Nama'}`} errorMsg={kelas.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        {
+                            multipleClass &&
+                            <TextInput name='name_night' value={kelas.name_night} title='Nama kelas malam' errorMsg={kelas.name_nightErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        }
+                        <DateInput name='start_date' timeInput={multipleClass ? false : true} value={kelas.start_date} title={multipleClass ? 'Dari tanggal' : 'Waktu mulai'} errorMsg={kelas.start_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <DateInput name='end_date' timeInput={multipleClass ? false : true} value={kelas.end_date} title={multipleClass ? 'Sampai tanggal' : 'Waktu selesai'} errorMsg={kelas.end_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <TextInput name='location' value={kelas.location} title='Lokasi' errorMsg={kelas.locationErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <SelectInput title='Pengurus' name='manager_id' value={kelas.manager_id} onChange={handleChange} errorMsg={kelas.manager_idErr} values={students} />
                         <SelectInput title='Guru' name='teacher_id' value={kelas.teacher_id} onChange={handleChange} errorMsg={kelas.teacher_idErr} values={teachers} />
@@ -348,7 +385,6 @@ function JadwalKelas() {
                         </div>
                     </>
             }
-
 
         </div>
 
