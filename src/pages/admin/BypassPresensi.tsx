@@ -16,15 +16,17 @@ function BypassPresensi() {
 
     const namaHari = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
 
-
     useEffect(() => {
         getClasses();
         getAttendances();
+        // const interval = setInterval(() => getAttendances(), 2000);
+        // return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         getAttendances();
     }, [selectedClassId]);
+
 
     function handleSearch(e: any) {
         setSearch(e.target.value);

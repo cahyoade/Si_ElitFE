@@ -10,6 +10,7 @@ import { FiEdit } from "react-icons/fi";
 import SelectInput from "../../components/SelectInput";
 import { userContext } from "./Index";
 import Swal from "sweetalert2";
+import TimeInput from "../../components/TimeInput";
 
 function JadwalKelas() {
     const [classes, setClasses] = useState([]);
@@ -24,6 +25,10 @@ function JadwalKelas() {
         id: '',
         name: '',
         name_night: '',
+        start_day: '',
+        end_day: '',
+        start_night: '',
+        end_night: '',
         start_date: '',
         end_date: '',
         location: '',
@@ -35,6 +40,10 @@ function JadwalKelas() {
         id: '',
         name: '',
         name_night: '',
+        start_day: '',
+        end_day: '',
+        start_night: '',
+        end_night: '',
         start_date: '',
         end_date: '',
         location: '',
@@ -59,7 +68,7 @@ function JadwalKelas() {
     }, [mode])
 
     function getClasses() {
-        axios.get(`${appSettings.api}/classes`, {
+        axios.get(`${appSettings.api}/classes?start_date=${search.startDate}&end_date=${search.endDate}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -122,7 +131,7 @@ function JadwalKelas() {
     function handleSubmit(e: any) {
         e.preventDefault();
         if (validateClass() === false) return;
-        axios.post(`${appSettings.api}/classes`, {...kelas, multiple_class: multipleClass}, {
+        axios.post(`${appSettings.api}/classes`, { ...kelas, multiple_class: multipleClass }, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -232,7 +241,7 @@ function JadwalKelas() {
     function validateClass() {
         let res = true;
         Object.keys(kelas).map((key) => {
-            if(multipleClass){
+            if (multipleClass) {
                 if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id') {
                     console.log(key)
                     res = false;
@@ -240,7 +249,7 @@ function JadwalKelas() {
                         return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
                     })
                 }
-            }else{
+            } else {
                 if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id' && key !== 'name_night') {
                     console.log(key)
                     res = false;
@@ -267,17 +276,21 @@ function JadwalKelas() {
 
 
     function handleChange(e: any) {
-        if(e.target.type == 'checkbox'){
+        if (e.target.type == 'checkbox') {
             setMultipleClass(e.target.checked)
-        }else{
+        } else {
             setKelas(prev => {
-                return { ...prev, [e.target.name]:  e.target.value, [e.target.name + 'Err']: '' }
+                return { ...prev, [e.target.name]: e.target.value, [e.target.name + 'Err']: '' }
             })
         }
     }
 
     function checkSearch(permit: any) {
-        let searchString = permit.name + permit.nis + permit.class_name + permit.description;
+        const startDate = new Date(permit.start_date);
+        const endDate = new Date(permit.end_date);
+
+        let searchString = permit.name + permit.nis + permit.class_name + permit.description + permit.location + namaHari[startDate.getDay()]
+            + startDate.toLocaleString('id').replace(/\//g, '-').replace(',', '').split(' ')[0];
 
         try {
             const re = new RegExp(search.string.replace(/\\*/, ''), 'i');
@@ -310,10 +323,16 @@ function JadwalKelas() {
                         <TextInput name='name' value={kelas.name} title={`${multipleClass ? 'Nama kelas pagi' : 'Nama'}`} errorMsg={kelas.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         {
                             multipleClass &&
-                            <TextInput name='name_night' value={kelas.name_night} title='Nama kelas malam' errorMsg={kelas.name_nightErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                            <>
+                                <TextInput name='name_night' value={kelas.name_night} title='Nama kelas malam' errorMsg={kelas.name_nightErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                                <TimeInput name='start_day' value={kelas.start_day} title='Waktu mulai kelas pagi' errorMsg={kelas.start_dayErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                                <TimeInput name='end_day' value={kelas.end_day} title='Waktu selesai kelas pagi' errorMsg={kelas.end_dayErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                                <TimeInput name='start_night' value={kelas.start_night} title='Waktu mulai kelas malam' errorMsg={kelas.start_nightErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                                <TimeInput name='end_night' value={kelas.end_night} title='Waktu selesai kelas malam' errorMsg={kelas.end_nightErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                            </>
                         }
-                        <DateInput name='start_date' timeInput={multipleClass ? false : true} value={kelas.start_date} title={multipleClass ? 'Dari tanggal' : 'Waktu mulai'} errorMsg={kelas.start_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
-                        <DateInput name='end_date' timeInput={multipleClass ? false : true} value={kelas.end_date} title={multipleClass ? 'Sampai tanggal' : 'Waktu selesai'} errorMsg={kelas.end_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <DateInput name='start_date' minToday={true} timeInput={multipleClass ? false : true} value={kelas.start_date} title={multipleClass ? 'Dari tanggal' : 'Waktu mulai'} errorMsg={kelas.start_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <DateInput name='end_date' minToday={true} timeInput={multipleClass ? false : true} value={kelas.end_date} title={multipleClass ? 'Sampai tanggal' : 'Waktu selesai'} errorMsg={kelas.end_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <TextInput name='location' value={kelas.location} title='Lokasi' errorMsg={kelas.locationErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <SelectInput title='Pengurus' name='manager_id' value={kelas.manager_id} onChange={handleChange} errorMsg={kelas.manager_idErr} values={students} />
                         <SelectInput title='Guru' name='teacher_id' value={kelas.teacher_id} onChange={handleChange} errorMsg={kelas.teacher_idErr} values={teachers} />
