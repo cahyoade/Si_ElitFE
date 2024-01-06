@@ -42,7 +42,7 @@ function Navbar({ className }: NavbarProps) {
                 </div>
             </div>
             <div className='flex w-4/12 min-w-[100px] text-xl justify-end items-center'>
-                <p className='font-semibold mr-6'>Hi, {userName}</p>
+                <p className='font-semibold mr-6 hidden md:block'>Hi, {userName}</p>
                 <BiLogOut className='cursor-pointer' fontSize="28px" onClick={logout}/>
             </div>
         </nav>

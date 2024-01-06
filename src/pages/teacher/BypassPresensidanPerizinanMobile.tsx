@@ -12,7 +12,7 @@ import { BsCheckCircle } from "react-icons/bs";
 import Swal from "sweetalert2";
 import DateInput from "../../components/DateInput";
 
-function BypassPresensi() {
+function BypassPresensidanPerizinanMobile() {
     const [attendances, setAttendances] = useState<any[]>([]);
     const [classes, setClasses] = useState<any[]>([]);
     const [selectedClassId, setSelectedClassId] = useState<any>(0);
@@ -62,7 +62,7 @@ function BypassPresensi() {
     }
 
     function getClasses() {
-        axios.get(`${appSettings.api}/classes?managerId=${userData.id}`, {
+        axios.get(`${appSettings.api}/classes?teacherId=${userData.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -336,4 +336,4 @@ function BypassPresensi() {
     );
 }
 
-export default BypassPresensi;
+export default BypassPresensidanPerizinanMobile;

@@ -282,7 +282,15 @@ function DataSantri() {
                         handleSubmit(e);
                     }
                 } }>
-                        <TextInput name='name' value={student.name} title='Nama' errorMsg={student.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
+                        <TextInput 
+                        name='name' 
+                        value={student.name} 
+                        title='Nama' 
+                        errorMsg={student.nameErr} 
+                        onChange={handleChange} 
+                        inputClassName="bg-white" 
+                        className="mb-8" />
+
                         <TextInput name='card_id' value={student.card_id} title='Card Id' errorMsg={student.card_idErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <TextInput name={student.id ? 'passwordNew' : 'password'} value={student.id ? student.passwordNew : student.password} title={student.id ? 'Password baru (opsional)' : 'password'} errorMsg={student.id ? student.passwordNewErr : student.passwordErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
                         <DateInput name='birth_date' value={student.birth_date} title='Tanggal lahir' errorMsg={student.birth_dateErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />

@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom'
 import { AppContext } from "../../AppContext";
 import jwt from 'jwt-decode';
 import Sidebar from "./components/Sidebar";
+import BypassPresensidanPerizinanMobile from "./BypassPresensidanPerizinanMobile";
 
 export const userContext = createContext({})
 
@@ -21,9 +22,12 @@ function Teacher() {
         <userContext.Provider value={userData}>
             <div className="flex flex-col items-center justify-start relative text-lg">
                 <Navbar className="bg-themeTeal" />
-                <div className="flex items-start w-full min-h-[100svh]">
-                <Sidebar />
-                <Outlet />
+                <div className="items-start w-full min-h-[100svh] hidden md:flex">
+                    <Sidebar />
+                    <Outlet />
+                </div>
+                <div className="md:hidden py-24">
+                    <BypassPresensidanPerizinanMobile />
                 </div>
                 <Footer />
             </div>

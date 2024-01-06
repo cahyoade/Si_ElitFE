@@ -113,7 +113,7 @@ function EditProfil() {
 
     return (
         <div className="w-full flex flex-col items-center min-h-[100svh]">
-            <p className="font-bold text-xl md:text-3xl mb-16">Edit <span className="text-themeTeal">Profil</span></p>
+            <p className="font-bold text-2xl md:text-3xl mb-16">Edit <span className="text-themeTeal">Profil</span></p>
             <form className="w-full max-w-6xl bg-[#f6f6f6]/50 p-8 shadow-md flex flex-col rounded-xl mb-16" onSubmit={handleSubmit}>
                 <TextInput name='name' value={userDataForm.name} title='name' errorMsg={userDataForm.nameErr} onChange={handleChange} inputClassName="bg-white" className="mb-8 pointer pointer-events-none grayscale contrast-[.90]" />
                 <TextInput name='telephone_number' value={userDataForm.telephone_number} title='Nomor Telepon' errorMsg={userDataForm.telephone_numberErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />

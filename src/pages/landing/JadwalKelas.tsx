@@ -7,6 +7,7 @@ import { AppContext } from "../../AppContext";
 import { ToastContainer, toast } from 'react-toastify'
 import DateInput from "../../components/DateInput";
 import TextInput from "../../components/TextInput";
+import moment from "moment";
 
 function JadwalKelas() {
     const [upcomingClasses, setUpcomingClasses] = useState([]);
@@ -18,6 +19,8 @@ function JadwalKelas() {
     useEffect(() => {
         getUpcomingClasses();
     }, []);
+
+
 
     function getUpcomingClasses() {
         axios.get(`${appSettings.api}/classes/upcoming?startDate=${search.startDate}&endDate=${search.endDate}`)
@@ -63,21 +66,20 @@ function JadwalKelas() {
     return (
         <div className="flex flex-col items-center justify-start relative text-lg">
             <Navbar className="bg-themeTeal mb-24" />
-            <p className="font-bold text-xl md:text-3xl mb-16">Jadwal <span className="text-themeTeal">Kelas</span></p>
-            <div className="w-full flex justify-between mb-4 max-w-5xl">
-                <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full max-w-md" inputClassName="bg-white" value={search.string} />
-                <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.startDate}/>
-                <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="" inputClassName="bg-white" value={search.endDate}/>
-                <button className="bg-themeTeal text-white text-sm font-semibold px-4 py-2 mt-3 h-fit rounded" onClick={getUpcomingClasses}>Terapkan filter</button>
+            <p className="font-bold text-3xl md:text-3xl mb-16">Jadwal <span className="text-themeTeal">Kelas</span></p>
+            <div className="w-10/12 flex flex-col md:w-full md:flex-row md:gap-8 justify-between items-end md:items-center mb-4 md:max-w-5xl">
+                <TextInput name="string" title="🔎 masukkan kata kunci" errorMsg="" onChange={handleSearch} className="w-full mb-4 md:max-w-md" inputClassName="bg-white" value={search.string} />
+                <DateInput name="startDate" title="dari" errorMsg="" onChange={handleSearch} className="w-full" inputClassName="bg-white -mb-6" value={search.startDate} />
+                <DateInput name="endDate" title="sampai" errorMsg="" onChange={handleSearch} className="w-full" inputClassName="bg-white -mb-6" value={search.endDate} />
+                <button className="bg-themeTeal self-end md:self-center text-white text-sm font-semibold px-4 py-2 mt-3 md:-mt-4 h-fit rounded" onClick={getUpcomingClasses}>Terapkan filter</button>
             </div>
-            <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24">
-                <table className="w-full text-left h-12">
+            <div className="rounded-lg overflow-x-hidden overflow-y-scroll max-h-96 no-scrollbar mb-24 w-10/12 md:w-auto">
+                <table className="w-full text-left h-12 text-sm md:text-base">
                     <thead className="bg-themeTeal text-white sticky top-0">
                         <tr>
-                            <th className="pl-6 py-2">No.</th>
+                            <th className="pl-6 py-2 hidden md:table-cell">No.</th>
                             <th className="pl-6 py-2">Nama</th>
-                            <th className="pl-6 py-2">Hari</th>
-                            <th className="pl-6 py-2">Kelas</th>
+                            <th className="pl-6 py-2 hidden md:table-cell">Kelas</th>
                             <th className="pl-6 py-2">Ruangan</th>
                             <th className="px-6 py-2">Waktu</th>
                         </tr>
@@ -91,12 +93,11 @@ function JadwalKelas() {
                                 return (
                                     checkSearch(upcomingClass) &&
                                     <tr className="even:bg-slate-200 odd:bg-white" key={index}>
-                                        <td className="pl-6 py-2">{index + 1}.</td>
+                                        <td className="pl-6 py-2 hidden md:table-cell">{index + 1}.</td>
                                         <td className="pl-6 py-2">{upcomingClass.name}</td>
-                                        <td className="pl-6 py-2">{namaHari[startDate.getDay()]}, {startDate.toLocaleString('id').replace(/\//g, '-').replace(',', '').split(' ')[0]}</td>
-                                        <td className="pl-6 py-2">{startDate.getHours() > 13 ? startDate.getHours() > 18 ? 'Malam' : 'Sore' : 'Pagi'}</td>
+                                        <td className="pl-6 py-2 hidden md:table-cell">{startDate.getHours() > 13 ? startDate.getHours() > 18 ? 'Malam' : 'Sore' : 'Pagi'}</td>
                                         <td className="pl-6 py-2">{upcomingClass.location}</td>
-                                        <td className="px-6 py-2">{startDate.toLocaleTimeString('id')} s/d {endDate.toLocaleTimeString('id')}</td>
+                                        <td className="px-6 py-2">{namaHari[startDate.getDay()]}, {startDate.toLocaleString('id').replace(/\//g, '-').replace(',', '').split(' ')[0]} {startDate.toLocaleTimeString('id')} s/d {endDate.toLocaleTimeString('id')}</td>
                                     </tr>
                                 )
                             })

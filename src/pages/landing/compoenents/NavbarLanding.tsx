@@ -1,16 +1,40 @@
 import Logo from '../../../assets/logo.png';
 import {Link, useLocation} from 'react-router-dom';
-import {useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 
 type NavbarProps = {
     className?: string
 }
 
+function useOutsideAlerter(ref, isExpanded, setIsExpanded) {
+    useEffect(() => {
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+  
+              setIsExpanded(false);
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+  
+      document.addEventListener("touchstart", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("touchstart", handleClickOutside);
+      };
+    }, [ref]);
+  }
 
 function Navbar({className}: NavbarProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const location = useLocation();
+    const wrapperRef = useRef(null);
+    useOutsideAlerter(wrapperRef, isExpanded, setIsExpanded);
 
     return (
         <nav className={`h-28 z-30 flex items-center w-full justify-between px-8 md:px-16 sticky top-0 ${className}`}>
@@ -28,7 +52,7 @@ function Navbar({className}: NavbarProps) {
                 <Link to='/faq' className={`cursor-pointer ${location.pathname.split('/')[1] == 'faq' ? 'font-bold' : ''}`}>FAQ</Link>
                 <Link to='/login' className={`cursor-pointer ${location.pathname.split('/')[1] == 'login' ? 'font-bold' : ''}`}>login</Link>
             </div>
-            <div className={`${isExpanded ? 'flex' : 'hidden'} text-base justify-between bg-white px-12 py-8 flex-col gap-8 absolute top-24 right-8 shadow-lg rounded-md`}>
+            <div ref={wrapperRef} className={`${isExpanded ? 'flex' : 'hidden'} text-base justify-between bg-white px-12 py-8 flex-col gap-8 absolute top-24 right-8 shadow-lg rounded-md`}>
                 <Link to='/beranda' className={`cursor-pointer ${!(['faq', 'jadwalKelas', 'login'].includes(location.pathname.split('/')[1])) ? 'font-bold' : ''}`} onClick={() => setIsExpanded(false)}>Beranda</Link>
                 <Link to='/jadwalKelas' className={`cursor-pointer ${location.pathname.split('/')[1] == 'jadwalKelas' ? 'font-bold' : ''}`} onClick={() => setIsExpanded(false)}>Jadwal Kelas</Link>
                 <Link to='/faq' className={`cursor-pointer ${location.pathname.split('/')[1] == 'faq' ? 'font-bold' : ''}`} onClick={() => setIsExpanded(false)}>FAQ</Link>

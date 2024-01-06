@@ -3,7 +3,7 @@ import {Link, useLocation} from 'react-router-dom'
 function Sidebar() {
     const location = useLocation();
     return ( 
-        <div className="bg-[#26B673]/10 self-stretch w-80 flex flex-col items-center pb-24">
+        <div className="bg-[#26B673]/10 self-stretch w-80 flex flex-col items-center pb-24 hidden md:block">
             <div className="w-full">
                 <p className="border-y-2 border-black py-2 mx-5 mt-5 px-6 font-bold">Kelas</p>
                 <Link to='/guru/bypassPresensi' >

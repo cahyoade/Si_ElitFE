@@ -40,7 +40,7 @@ function formPerizinan() {
                 }
                 else {
                     const classes = res.data.map((el: any) => {
-                        const label = `${userData.class_name} - ${el.class_name} (${(new Date(el.start_date)).toLocaleString('id').substring(0, 17).replace(/\//g, '-')} s/d ${(new Date(el.end_date)).toLocaleString('id').substring(12, 17).replace(/\//g, '-')})`;
+                        const label = `${userData.class_name} - ${el.class_name} (${(new Date(el.start_date)).toLocaleString('id').substring(0, 17).replace(/\//g, '-')} s/d ${(new Date(el.end_date)).toLocaleString('id').substring(11, 16).replace(/\//g, '-')})`;
                         return { value: el.class_id, label: label, attend_at: el.attend_at }
                     });
                     console.log(classes);
@@ -144,7 +144,7 @@ function formPerizinan() {
 
     return (
         <div className="w-full flex flex-col items-center min-h-[100svh]">
-            <p className="font-bold text-xl md:text-3xl mb-16">Form <span className="text-themeTeal">Perizinan</span></p>
+            <p className="font-bold text-2xl md:text-3xl mb-16">Form <span className="text-themeTeal">Perizinan</span></p>
             <form className="w-full max-w-6xl bg-[#f6f6f6]/50 p-8 shadow-md flex flex-col rounded-xl mb-16" onSubmit={handleSubmit}>
                 <SelectInput title='Kelas' name='class_id' value={formIzin.class_id} onChange={handleChange} errorMsg={formIzin.class_idErr} values={classes} />
                 <TextInput name='description' value={formIzin.description} title='Alasan' errorMsg={formIzin.descriptionErr} onChange={handleChange} inputClassName="bg-white" className="mb-8" />
@@ -160,11 +160,11 @@ function formPerizinan() {
                 </div>
             </form>
             <div className="flex flex-col items-center w-full">
-                <p className="font-bold text-xl md:text-3xl mb-16 mt-16">Riwayat <span className="text-themeTeal">Perizinan</span></p>
-                <div className='hidden last:block text-xl mb-24'>
+                <p className="font-bold text-2xl md:text-3xl mb-16 mt-16">Riwayat <span className="text-themeTeal">Perizinan</span></p>
+                <div className='hidden last:block text-base text-center mb-24'>
                     Anda belum memiliki riwayat perizinan
                 </div>
-                {leavePermits.map((el: any, id) => <PermitCard key={id} {...el} fetchData={fetchData} />)}
+                {leavePermits.map((el: any, id) => el.nis == userData.nis && <PermitCard key={id} {...el} fetchData={fetchData} />)}
             </div>
         </div>
     );

@@ -243,15 +243,13 @@ function JadwalKelas() {
         Object.keys(kelas).map((key) => {
             if (multipleClass) {
                 if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id') {
-                    console.log(key)
                     res = false;
                     setKelas(prev => {
                         return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
                     })
                 }
             } else {
-                if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id' && key !== 'name_night') {
-                    console.log(key)
+                if (kelas[key] === '' && !key.endsWith('Err') && key !== 'id' && key !== 'name_night' && key !== 'start_day' && key !== 'end_day' && key !== 'start_night' && key !== 'end_night') {
                     res = false;
                     setKelas(prev => {
                         return { ...prev, [key + 'Err']: 'tidak boleh kosong' }
