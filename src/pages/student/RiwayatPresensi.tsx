@@ -24,7 +24,7 @@ function RiwayatPresensi() {
                     toast.warn(res.data.msg);
                 }
                 else {
-                    setAttendanceHistory(res.data)
+                    setAttendanceHistory(res.data);
                 }
             })
             .catch(err => {

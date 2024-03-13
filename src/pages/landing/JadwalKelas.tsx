@@ -21,7 +21,6 @@ function JadwalKelas() {
     }, []);
 
 
-
     function getUpcomingClasses() {
         axios.get(`${appSettings.api}/classes/upcoming?startDate=${search.startDate}&endDate=${search.endDate}`)
             .then(res => {
