@@ -144,7 +144,8 @@ function BypassPresensi() {
 										<td className="pl-6 py-2">{attendance.class_name.length > 20 ? attendance.class_name.substring(0, 20) + '...' : attendance.class_name}</td>
 										<td className="pl-6 py-2">{startDate.toLocaleString('id')}</td>
 										<td>
-											<div className={`rounded ${attendance.status ? attendance.status === 'hadir' ? 'bg-themeTeal text-white ' : 'bg-themeOrange text-white ': 'bg-[#d9d9d9] text-black'}`}>
+											<div
+												className={`rounded ${attendance.status ? attendance.status === 'hadir' ? 'bg-green-500/70	 text-white ' : 'bg-yellow-500/70 text-white ' : 'bg-red-500/70 text-white'}`}>
 												{attendance.status ? attendance.status : 'Not set'}
 											</div>
 										</td>

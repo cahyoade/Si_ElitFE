@@ -224,7 +224,7 @@ function RekapPresensi() {
                         </table>
                     </div>
 
-                    <p className="font-bold text-xl md:text-3xl mb-16">Persentasi Kehadiran <span className="text-themeTeal"> {`${search.startDate} s/d ${search.endDate}`}</span></p>
+                    <p className="font-bold text-xl md:text-3xl mb-16">Persentase Kehadiran <span className="text-themeTeal"> {`${search.startDate} s/d ${search.endDate}`}</span></p>
                     <div className="flex gap-4 mb-6">
                         <p>Total ngaji: {totalAttendance.all}</p>
                         <p>Sesi pagi: {totalAttendance.pagi}</p>
