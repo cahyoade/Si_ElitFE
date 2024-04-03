@@ -270,13 +270,13 @@ function RekapPresensi() {
                                                 <th className="py-2 border border-white">{idx + 1}.</th>
                                                 <th className="py-2 border border-white">{recap[el][0].name}</th>
                                                 <th className="py-2 border border-white">{recap[el][0].gender ? 'L' : 'P'}</th>
-                                                <th className="py-2 border border-white">{Math.round(jumlah_hadir_pagi / totalAttendance.pagi * 100)}%</th>
-                                                <th className="py-2 border border-white">{Math.round(jumlah_izin_pagi / totalAttendance.pagi * 100)}%</th>
-                                                <th className="py-2 border border-white">{Math.round(jumlah_alfa_pagi / totalAttendance.pagi * 100)}%</th>
-                                                <th className="py-2 border border-white">{Math.round(jumlah_hadir_malam / totalAttendance.malam * 100)}%</th>
-                                                <th className="py-2 border border-white">{Math.round(jumlah_izin_malam / totalAttendance.malam * 100)}%</th>
-                                                <th className="py-2 border border-white">{Math.round(jumlah_alfa_malam / totalAttendance.malam * 100)}%</th>
-                                                <th className="py-2 border border-white">{Math.round(((jumlah_hadir_pagi + jumlah_hadir_malam) + ((jumlah_izin_pagi + jumlah_izin_malam)/2))/totalAttendance.all * 100 )}%</th>
+                                                <th className="py-2 border border-white">{Math.round(jumlah_hadir_pagi / totalAttendance.pagi * 100) || 0}%</th>
+                                                <th className="py-2 border border-white">{Math.round(jumlah_izin_pagi / totalAttendance.pagi * 100) || 0}%</th>
+                                                <th className="py-2 border border-white">{Math.round(jumlah_alfa_pagi / totalAttendance.pagi * 100) || 0}%</th>
+                                                <th className="py-2 border border-white">{Math.round(jumlah_hadir_malam / totalAttendance.malam * 100) || 0}%</th>
+                                                <th className="py-2 border border-white">{Math.round(jumlah_izin_malam / totalAttendance.malam * 100) || 0}%</th>
+                                                <th className="py-2 border border-white">{Math.round(jumlah_alfa_malam / totalAttendance.malam * 100) || 0}%</th>
+                                                <th className="py-2 border border-white">{Math.round(((jumlah_hadir_pagi + jumlah_hadir_malam) + ((jumlah_izin_pagi + jumlah_izin_malam)/2))/totalAttendance.all * 100 ) || 0}%</th>
                                             </tr>
                                         )
                                     })
